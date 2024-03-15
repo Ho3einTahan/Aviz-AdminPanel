@@ -1,7 +1,6 @@
 const express=require('express');
 const bodyParser = require("body-parser");
 
-
 const { setStatics } = require("./utils/statics");
 const app = express();
 
@@ -22,10 +21,14 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 //End of EJS
 
-
+// Create Table Foriegn Key
+require('./function/createTable').CreateTable();
 
 
 app.use('/users',require('./routes/user'));
+
+
+app.use('/advertising',require('./routes/advertising'));
 
 app.get('/admin',(req,res)=>{
 
@@ -33,7 +36,7 @@ app.get('/admin',(req,res)=>{
 
 });
 
-app.listen(3000,()=>{
+app.listen(3000,async()=>{
   console.log('Server is Runing on Port 3000');
 });
 
