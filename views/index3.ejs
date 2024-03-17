@@ -46,22 +46,12 @@
                             <img src="images/icon/logo-white.png" alt="CoolAdmin" />
                         </a>
                     </div>
-                    <div class="header__navbar">
-                        <ul class="list-unstyled">
-                    
-                            <li class="has-sub">
-                                <a href="#">
-                                    <i class="fas fa-desktop"></i>
-                                    <span class="bot-line"></span>UI Elements</a>
-                        </ul>
-                    </div>
+                
                     <div class="header__tool">
                         <div class="header-button-item has-noti js-item-menu">
                             <i class="zmdi zmdi-notifications"></i>
                             <div class="notifi-dropdown notifi-dropdown--no-bor js-dropdown">
-                                <div class="notifi__title">
-                                    <p>You have 3 Notifications</p>
-                                </div>
+                            
                                 <div class="notifi__item">
                                     <div class="bg-c1 img-cir img-40">
                                         <i class="zmdi zmdi-email-open"></i>
@@ -427,18 +417,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="au-breadcrumb-content">
-                                <div class="au-breadcrumb-left">
-                                    <span class="au-breadcrumb-span">You are here:</span>
-                                    <ul class="list-unstyled list-inline au-breadcrumb__list">
-                                        <li class="list-inline-item active">
-                                            <a href="#">Home</a>
-                                        </li>
-                                        <li class="list-inline-item seprate">
-                                            <span>/</span>
-                                        </li>
-                                        <li class="list-inline-item">Dashboard</li>
-                                    </ul>
-                                </div>
+                            
                                 <form class="au-form-icon--sm" action="" method="post">
                                     <input class="au-input--w300 au-input--style2" type="text" placeholder="Search for datas &amp; reports...">
                                     <button class="au-btn--submit2" type="submit">
@@ -477,24 +456,15 @@
                                 <div class="table-data__tool-left">
                             
                                     <div class="rs-select2--light rs-select2--sm">
-                                        <select class="js-select1" name="time">
-                                            <option selected="selected">آگهی های تایید شده</option>
-                                            <option value="">آگهی های تایید نشده</option>
+                                        <select class="js-select1" name="time" onchange="redirect(this)">
+                                            <% if (params == 0) { %>
+                                                <option>آگهی های تایید نشده</option>
+                                                <option  >آگهی های تایید شده</option>
+                                            <% } else if(params==1) { %>
+                                                <option >آگهی های تایید شده</option>
+                                                <option >آگهی های تایید نشده</option>
+                                            <% } %>                                            
                                         </select>
-                                        <div class="dropDownSelect2"></div>
-                                    </div>
-                                
-                                </div>
-                                <div class="table-data__tool-right">
-                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                        <i class="zmdi zmdi-plus"></i>add item</button>
-                                    <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-                                        <select class="js-select2" name="type">
-                                            <option selected="selected">Export</option>
-                                            <option value="">Option 1</option>
-                                            <option value="">Option 2</option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
                                     </div>
                                 </div>
                             </div>
@@ -502,142 +472,41 @@
                                 <table class="table table-data2">
                                     <thead>
                                         <tr>
-                                            <th>
-                                                <label class="au-checkbox">
-                                                    <input type="checkbox">
-                                                    <span class="au-checkmark"></span>
-                                                </label>
-                                            </th>
                                             <th>نام کاربر</th>
                                             <th>شماره کاربر</th>
                                             <th>توضیحات آگهی</th>
                                             <th>تاریخ ثبت</th>
                                             <th>وضعیت</th>
                                             <th>قیمت</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                       <% advertising.forEach(ad => { %>
                                         <tr class="tr-shadow">
+                                        
+                                            <td><%= ad.name %></td>
                                             <td>
-                                                <label class="au-checkbox">
-                                                    <input type="checkbox">
-                                                    <span class="au-checkmark"></span>
-                                                </label>
+                                                <span class="block-email"><%= ad.phoneNumber %></span>
                                             </td>
-                                            <td>Lori Lynch</td>
+                                            <td class="desc"><%= ad.ad_Content %></td>
+                                            <td><%= ad.date %></td>
                                             <td>
-                                                <span class="block-email">lori@example.com</span>
+                                                <% if (ad.isSubmit==1) { %>
+                                                    <span class="status--process">تایید شده</span>
+                                                <% } else{ %>
+                                                    <span class="status--denied">لغو شده</span>
+                                                    <% } %>
                                             </td>
-                                            <td class="desc">Samsung S8 Black</td>
-                                            <td>2018-09-27 02:12</td>
-                                            <td>
-                                                <span class="status--process">تایید شده</span>
-                                            </td>
-                                            <td>$679.00</td>
+                                            <td><%= ad.price %></td>
                                             <td>
                                                 <div class="table-data-feature">
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                        <i class="zmdi zmdi-mail-send"></i>
-                                                    </button>
-                                                
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                        <i class="zmdi zmdi-delete"></i>
-                                                    </button>
-                                                
-                                                </div>
+                                                        <a class="item btn btn-lg"  href="http://localhost:3000/advertising/delete/<%= ad.ad_Id %>"><i class="zmdi zmdi-mail-send" style="color:#06FF00"></i></a>                                                
+                                                        <a class="item btn btn-lg" href=
+                                                        "http://localhost:3000/advertising/delete/<%= ad.ad_Id %>"><i class="zmdi zmdi-delete" style="color:#FF1700;"></i></a>
+                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr class="tr-shadow">
-                                            <td>
-                                                <label class="au-checkbox">
-                                                    <input type="checkbox">
-                                                    <span class="au-checkmark"></span>
-                                                </label>
-                                            </td>
-                                            <td>Lori Lynch</td>
-                                            <td>
-                                                <span class="block-email">lori@example.com</span>
-                                            </td>
-                                            <td class="desc">Samsung S8 Black</td>
-                                            <td>2018-09-27 02:12</td>
-                                            <td>
-                                                <span class="status--process">تایید شده</span>
-                                            </td>
-                                            <td>$679.00</td>
-                                            <td>
-                                                <div class="table-data-feature">
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                        <i class="zmdi zmdi-mail-send"></i>
-                                                    </button>
-                                                
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                        <i class="zmdi zmdi-delete"></i>
-                                                    </button>
-                                                
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="tr-shadow">
-                                            <td>
-                                                <label class="au-checkbox">
-                                                    <input type="checkbox">
-                                                    <span class="au-checkmark"></span>
-                                                </label>
-                                            </td>
-                                            <td>Lori Lynch</td>
-                                            <td>
-                                                <span class="block-email">lori@example.com</span>
-                                            </td>
-                                            <td class="desc">Samsung S8 Black</td>
-                                            <td>2018-09-27 02:12</td>
-                                            <td>
-                                                <span class="status--process">تایید شده</span>
-                                            </td>
-                                            <td>$679.00</td>
-                                            <td>
-                                                <div class="table-data-feature">
-                                                    <button class="item btn btn-lg" data-toggle="tooltip" data-placement="top" title="Send">
-                                                        <i class="zmdi zmdi-mail-send" style="color:#06FF00"></i>
-                                                    </button>
-                                                
-                                                    <button class="item btn btn-lg" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                        <i class="zmdi zmdi-delete" style="color:#FF1700;"></i>
-                                                    </button>
-                                                
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="tr-shadow">
-                                            <td>
-                                                <label class="au-checkbox">
-                                                    <input type="checkbox">
-                                                    <span class="au-checkmark"></span>
-                                                </label>
-                                            </td>
-                                            <td>Lori Lynch</td>
-                                            <td>
-                                                <span class="block-email">lori@example.com</span>
-                                            </td>
-                                            <td class="desc">Samsung S8 Black</td>
-                                            <td>2018-09-27 02:12</td>
-                                            <td>
-                                                <span class="status--denied">تایید شده</span>
-                                            </td>
-                                            <td>$679.00</td>
-                                            <td>
-                                                <div class="table-data-feature">
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                        <i class="zmdi zmdi-mail-send"></i>
-                                                    </button>
-                                                
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                        <i class="zmdi zmdi-delete"></i>
-                                                    </button>
-                                                
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        <% }) %>
                                     </tbody>
                                 </table>
                             </div>
@@ -689,6 +558,19 @@
     <script src="js/main.js"></script>
 
 </body>
+
+<script>
+    function redirect(select) {
+    const selectedValue = select.value;
+
+    if (selectedValue === 'آگهی های تایید شده') {
+        window.location.href = '?is_submit=1'; // مسیر مرتبط با آگهی‌های تایید شده
+    } else {
+        window.location.href = '?is_submit=0'; // مسیر مرتبط با آگهی‌های تایید نشده
+    }
+
+}
+</script>
 
 </html>
 <!-- end document-->
