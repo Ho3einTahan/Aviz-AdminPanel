@@ -28,7 +28,7 @@ require('./function/createTable').CreateTable();
 app.use('/users',require('./routes/user'));
 
 
-app.use('/advertising',require('./routes/advertising'));
+app.use('/ads',require('./routes/advertising'));
 
 app.get('/admin',(req,res)=>{
 
