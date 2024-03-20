@@ -53,7 +53,7 @@ exports.LoginAdmin = async (req, res) => {
     advertising = ad;
   }
   else {
-    const [ad, field] = await connection.query(`SELECT * FROM user JOIN advertising a ON user.user_Id = a.user_Id AND a.isSubmit=0;`);
+    const [ad, field] = await connection.query(`SELECT * FROM user JOIN advertisements a ON user.user_Id = a.user_Id AND a.isSubmit=0;`);
     advertising = ad;
   }
 
